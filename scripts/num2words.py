@@ -18,24 +18,34 @@ baseDictfemale = {
     "2": "שתיים",
     "3": "שלוש",
     "4": "ארבע",
-    "5": "חמיש" ,
-    "6": "שיש",
+    "5": "חמש" ,
+    "6": "שש",
     "7": "שבע",
-    "8": "שמונ",
+    "8": "שמונה",
     "9": "תשע",
     "10": "עשר",
 }
 decadesDict = {
-        "20": "עשרים",
-    "30": "שלושים",
-    "40": "ארבעים",
-    "50": "חמישים" ,
-    "60": "שישים",
-    "70": "שבעים",
-    "80": "שמונים",
-    "90": "תשעים",
+        "2": "עשרים",
+    "3": "שלושים",
+    "4": "ארבעים",
+    "5": "חמישים" ,
+    "6": "שישים",
+    "7": "שבעים",
+    "8": "שמונים",
+    "9": "תשעים",
 }
 teenDictF = {
+    "1": "אחת",
+    "2": "שתיים",
+    "3": "שלוש",
+    "4": "ארבע",
+    "5": "חמיש",
+    "6": "שש",
+    "7": "שבע",
+    "8": "שמונה",
+    "9": "תשע",
+    "10": "עשר",
         "11": "אחת עשרה",
     "12": "שתים עשרה",
     "13": "שלוש עשרה",
@@ -66,15 +76,42 @@ centDict ={
 
 
 
-for i in range(9,-1, -1):
-    print(i)
-def num2words(num):
+
+def baseNum2words(num, flag=False):
     """
 
     """
-    if num<=10:
-        return baseDictfemale[str(num)]
-    elif 21>num and num>10:
-        return teenDictF[str(num)]
-    elif
+    words = []
+    if num >=100:
+        flag = True
+        if num>=300:
+            words.append(baseDictfemale[str(int(num/100))]+" ")
+            words.append("מאות ")
+        elif num>=200 and num<300:
+            words.append("מאתיים ")
+        elif num < 200 and num >= 100:
+            words.append("מאה ")
+        num = num % 100
+    if num >= 20:
+        words.append(decadesDict[str(int(num/10))]+" ")
+        num = num % 10
+        if num>0:
+            words.append("ו")
+            words.append(baseDictfemale[str(int(num))])
+    elif num < 20 and num > 0:
+        if flag:
+            words.append("ו")
+        words.append(teenDictF[str(num)])
+
+    words = "".join(words)
+    return words
+
+def num2words(num):
+    if num >= 1000:
+        pass
+
+
+for i in range(1,1000):
+    print(baseNum2words(i))
+
 
