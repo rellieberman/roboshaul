@@ -103,15 +103,27 @@ def baseNum2words(num, flag=False):
             words.append("ו")
         words.append(teenDictF[str(num)])
 
-    words = "".join(words)
+    #words = "".join(words)
     return words
 
 def num2words(num):
-    if num >= 1000:
-        pass
+    if num < 1000:
+        words =  baseNum2words(num)
+    elif num<1000000:
+        if num>=1000 and num<2000:
+            words = ["אלף "]+baseNum2words(num%1000, True)
+        elif num<3000:
+            words = ["אלפיים "] + baseNum2words(num % 1000, True)
+        elif num<11000:
+            words = [baseDictfemale[str(int(num/1000))]+"ת "]+["אלפים "] + baseNum2words(num % 1000, True)
+        else:
+            words = baseNum2words(int(num / 1000)) + ["אלף "] + baseNum2words(num % 1000, True)
+
+    return words
 
 
-for i in range(1,1000):
-    print(baseNum2words(i))
+
+for i in range(1,1000000):
+    print("".join(num2words(i)))
 
 
