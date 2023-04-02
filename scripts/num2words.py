@@ -56,7 +56,6 @@ teenDictF = {
     "18": "שמונה עשרה",
     "19": "תשע עשרה",
 }
-
 teenDictM = {
         "11": "אחד עשר",
     "12": "שנים עשר",
@@ -68,12 +67,22 @@ teenDictM = {
     "18": "שמונה עשר",
     "19": "תשעה עשר",
 }
-
 centDict ={
     "1": "מאה",
     "2": "מאתיים"
 }
-
+adjBaseDictfemale = {
+    "1":"אחת",
+    "2": "שתיים",
+    "3": "שלושת",
+    "4": "ארבעת",
+    "5": "חמשת" ,
+    "6": "ששת",
+    "7": "שבעת",
+    "8": "שמונת",
+    "9": "תשעת",
+    "10": "עשרת",
+}
 
 
 
@@ -106,24 +115,27 @@ def baseNum2words(num, flag=False):
     #words = "".join(words)
     return words
 
+def num2words1m(num):
+
+    if num>=1000 and num<2000:
+        words = ["אלף "]+baseNum2words(num%1000, True)
+    elif num<3000:
+        words = ["אלפיים "] + baseNum2words(num % 1000, True)
+    elif num<11000:
+        words = [adjBaseDictfemale[str(int(num/1000))]+" "]+["אלפים "] + baseNum2words(num % 1000, True)
+    else:
+        words = baseNum2words(int(num / 1000)) + [" אלף "] + baseNum2words(num % 1000, True)
+    return words
+
 def num2words(num):
     if num < 1000:
         words =  baseNum2words(num)
     elif num<1000000:
-        if num>=1000 and num<2000:
-            words = ["אלף "]+baseNum2words(num%1000, True)
-        elif num<3000:
-            words = ["אלפיים "] + baseNum2words(num % 1000, True)
-        elif num<11000:
-            words = [baseDictfemale[str(int(num/1000))]+"ת "]+["אלפים "] + baseNum2words(num % 1000, True)
-        else:
-            words = baseNum2words(int(num / 1000)) + ["אלף "] + baseNum2words(num % 1000, True)
-
+        words = num2words1m(num)
     return words
 
 
-
-for i in range(1,1000000):
+for i in range(1,10000):
     print("".join(num2words(i)))
 
 
